@@ -1,6 +1,7 @@
 # MolSnapper: Conditioning Diffusion for Structure Based Drug Design
 > This is A tool to condition diffusion model for Generating 3D Drug-Like Molecules.
-> This repository is build on [MolDiff](https://proceedings.mlr.press/v202/peng23b.html) code and train model.
+> 
+> This repository is build on [MolDiff](https://proceedings.mlr.press/v202/peng23b.html) code and conditioned MolDiff trained model.
 
 
 More information can be found in our paper.
@@ -52,10 +53,10 @@ Please download the following files:
 
 Save them in <test_directory> and process the test data using:
 ```python
-python scripts/prepare_cd.py --pairs-paths <test_directory>/test_index.pkl --root-dir <test_directory>  --out-mol-sdf <data_dir>/test_mol.sdf --out-pockets-pkl <data_dir>/test_pockets.pkl --out-table <data_dir>/test_table.csv
+python scripts/prepare_data_cd.py --pairs-paths <test_directory>/test_index.pkl --root-dir <test_directory>  --out-mol-sdf <data_dir>/test_mol.sdf --out-pockets-pkl <data_dir>/test_pockets.pkl --out-table <data_dir>/test_table.csv
 ```
 #### Processed data
-The processed CrossDocked data can be found here:
+The processed CrossDocked test set can be found in data dir:
 ``` bash
 data
 ├── crossdocked
@@ -69,7 +70,7 @@ Download and split the dataset as described by the authors of DiffSBDD
 https://github.com/arneschneuing/DiffSBDD/tree/main \
 Save the test set in <test_directory>
 
-Process the test directory using:
+After removing water process the test directory using:
 ```python
 python scripts/prepare_moad.py --test_path <test_directory>  --out-mol-sdf <data_dir>/MOAD_test_mol.sdf --out-pockets-pkl <data_dir>/MOAD_pockets.pkl --out-table <data_dir>/MOAD_table.csv
 ```
@@ -148,18 +149,13 @@ python scripts/sample.py --outdir ./outputs --config ./configs/sample/sample_Mol
 
 To evaluate the generated molecules, run the following command:
 ```python
-python scripts/evaluate_all.py --result_root <result_root> --exp_name <exp_name> --from_where generated
+python scripts/evaluate.py --result_root <result_root> --protein_path <protein_path>.pdb --reflig_path <reflig_path> --save_path <save_path>
 ```
 The parameters are:
-- `result_root`: the parent directory of the directory of the sampled molecules (i.e, the same as the `outdir` parameter when running `sample_drug3d.py`).
-- `exp_name`: the name (or prefix) of the directory of the molecules (excluding the suffix `_SDF`).
-- `from_where`: be one of `generated` of `dataset`.
-
-An example command to calculate metrics for the sampled molecules is:
-```python
-python scripts/evaluate_all.py --result_root ./outputs --exp_name sample_MolDiff_20230101_000000 --from_where generated
-```
-
+- `result_root`: the directory of the sampled molecules.
+- `protein_path`: the path to the protein (PDB format).
+- `reflig_path`: the path to reference ligand to evaluate similarity (default is None).
+- `save_path`: the path directory to save the evaluation results.
 
 
 

@@ -1,6 +1,7 @@
 import argparse
 import os
 import sys
+import torch
 sys.path.append('.')
 import os
 from multiprocessing import Pool
@@ -31,8 +32,8 @@ def evaluate_single_pocket( mols_paths, protein_path, reflig_path):
     # Perform interaction analysis
 
     interaction_results = []
-    for file_path in mols_paths:
-        interaction_results.append(get_h_bond(protein_path, file_path))
+    # for file_path in mols_paths:
+    #     interaction_results.append(get_h_bond(protein_path, file_path))
     # Save interaction results (if needed)
 
     # Perform scoring function evaluation
@@ -47,23 +48,23 @@ def evaluate_single_pocket( mols_paths, protein_path, reflig_path):
         'interaction': interaction_results,
         'similarity': str(similarity_results)
     })
+    return results
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('gen_root', type=str)
+    parser.add_argument('--result_root', type=str)
     parser.add_argument('--protein_path', type=str)
     parser.add_argument('--reflig_path', type=str, default=None)
     parser.add_argument('--save_path', type=str, default=None, help='Path to save the results')
 
     args = parser.parse_args()
 
-    gen_dir = args.gen_root
-    prb_files = glob(os.path.join(gen_dir, '*.sdf'))
+    gen_dir = args.result_root
+    prb_files = glob(os.path.join(gen_dir, '*.sdf'))[:10]
 
     results = evaluate_single_pocket(mols_paths = prb_files, protein_path = args.protein_path, reflig_path = args.reflig_path)
 
     if args.save_path:
-        with open(args.save_path, 'w') as json_file:
-            json.dump(results, json_file, indent=2)
+        torch.save(results, os.path.join(args.save_path, f'eval_all.pt'))
 
