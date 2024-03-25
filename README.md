@@ -72,7 +72,7 @@ Save the test set in <test_directory>
 
 After removing water process the test directory using:
 ```python
-python scripts/prepare_moad.py --test_path <test_directory>  --out-mol-sdf <data_dir>/MOAD_test_mol.sdf --out-pockets-pkl <data_dir>/MOAD_pockets.pkl --out-table <data_dir>/MOAD_table.csv
+python scripts/prepare_moad.py --test_path <test_directory>  --out-mol-sdf <data_dir>/test_mol.sdf --out-pockets-pkl <data_dir>/test_pockets.pkl --out-table <data_dir>/test_table.csv
 ```
 #### Processed data
 The processed Binding MOAD data can be found here:
@@ -149,10 +149,10 @@ python scripts/sample.py --outdir ./outputs --config ./configs/sample/sample_Mol
 
 To evaluate the generated molecules, run the following command:
 ```python
-python scripts/evaluate.py --result_root <result_root> --protein_path <protein_path>.pdb --reflig_path <reflig_path> --save_path <save_path>
+python scripts/evaluate.py  <gen_root> --protein_path <protein_path>.pdb --reflig_path <reflig_path> --save_path <save_path>
 ```
 The parameters are:
-- `result_root`: the directory of the sampled molecules.
+- `gen_root`: the directory of the sampled molecules.
 - `protein_path`: the path to the protein (PDB format).
 - `reflig_path`: the path to reference ligand to evaluate similarity (default is None).
 - `save_path`: the path directory to save the evaluation results.
