@@ -17,6 +17,8 @@ from utils.scoring_func import compute_sa_score
 from itertools import islice
 os.chdir(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
+def get_similarity(fg_pair):
+    return TanimotoSimilarity(fg_pair[0], fg_pair[1])
 
 def get_sim_with_gt(reflig, mol):
         mol_finger = Chem.RDKFingerprint(mol)
@@ -77,12 +79,12 @@ class SimilarityAnalysis:
 
 def eval_single_pocket( reflig, row, args, logger):
     uuid = row['uuid']
-    prb_files = glob(os.path.join(args.gen_root, str(uuid), '*.sdf'))
+    prb_files = glob(os.path.join(args.gen_root, str(uuid), '*shifted.sdf'))
     n_eval_success = 0
     results = []
     prb_mols = []
     if prb_files != []:
-        for path in prb_files[:100]:
+        for path in prb_files:
             mol = Chem.SDMolSupplier(path)[0]
 
             prb_mols.append(mol)
@@ -113,34 +115,6 @@ def eval_single_pocket( reflig, row, args, logger):
     else:
         return None
     logger.info(f'Evaluate No {uuid} done! {len(prb_files)} samples in total. {n_eval_success} eval success!')
-    if args.result_path:
-        torch.save(results, os.path.join(args.result_path, f'eval_similarity_{uuid:03d}.pt'))
-    return results
-
-def eval_sim_for_best_sa_single_pocket( reflig, row, args, logger, path):
-    uuid = row['uuid']
-    prb_file = path['path']
-    n_eval_success = 0
-    results = []
-
-    mol = Chem.SDMolSupplier(prb_file)[0]
-    # chemical and docking check
-    try:
-        SuCOS_sim = calc_SuCOS_normalized(reflig,mol)
-        tanimoto_sim = get_sim_with_gt(reflig,mol)
-
-        n_eval_success += 1
-    except Exception as e:
-        logger.warning('Evaluation failed for %s' % f'{uuid}')
-        print(str(e))
-
-    results.append({
-        'SuCOS_sim': SuCOS_sim,
-        'tanimoto_sim': tanimoto_sim
-    })
-
-
-    logger.info(f'Evaluate No {uuid} done! {len(prb_file)} samples in total. {n_eval_success} eval success!')
     if args.result_path:
         torch.save(results, os.path.join(args.result_path, f'eval_similarity_{uuid:03d}.pt'))
     return results
