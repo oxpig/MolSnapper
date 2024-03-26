@@ -6,7 +6,7 @@ import json
 import pickle
 sys.path.append('.')
 # import torch.utils.tensorboard
-from utils.dataset_crossdocked_pharama import get_test_dataloader
+from utils.dataset_pharama import get_test_dataloader
 from models.model import MolDiff
 from models.bond_predictor import BondPredictor
 from utils.sample import seperate_outputs
@@ -31,15 +31,15 @@ def process_files(pocket_path, sdf_file, atomic_numbers ,extract_pharma):
 
     if extract_pharma:
         new_feats_dict, idxsDict, allCoords = getPharamacophoreCoords(mol)
-        pharamacophore_coords = np.array(allCoords['Coords'])
-        pharamacophore_family = allCoords['Family']
 
+        permuted_indices = np.random.permutation(range(len(allCoords['Coords'])))
+        pharamacophore_coords = np.array(allCoords['Coords'])[permuted_indices]
+        pharamacophore_family = allCoords['Family']
         positions, unique_indices = np.unique(pharamacophore_coords, axis=0, return_index=True)
 
         # Convert labels to numerical values
         family_labels = np.array([FAMILY_MAPPING[label] for label in pharamacophore_family])
-        node_type = family_labels[unique_indices]
-
+        node_type = family_labels[permuted_indices][unique_indices]
     else:
         ele_to_nodetype = {ele: i for i, ele in enumerate(atomic_numbers)}
         ele_list = []
@@ -110,8 +110,6 @@ if __name__ == '__main__':
                         help='Minimum percentage of satisfied pharmacophore points required for a generated molecule to be considered valid during the sampling process.')
     parser.add_argument('--clash_rate', type=float, default=0.1,
                         help='Strength of avoiding clashes during the molecule sampling process.')
-    parser.add_argument('--num_pharma_atoms', type=int, default=20,
-                        help='Number of pharmacophore atoms used for molecule generation from the extracted ones.')
     parser.add_argument('--distance_th', type=float, default=1.,
                         help='Threshold for determining whether a pharmacophore is satisfied.')
 
