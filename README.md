@@ -6,7 +6,7 @@
 
 More information can be found in our paper.
 
-[](img.png)
+![](img.png)
 ## Installation
 ### Dependency
 The codes have been tested in the following environment:
