@@ -6,6 +6,7 @@
 
 More information can be found in our paper.
 
+[](img.png)
 ## Installation
 ### Dependency
 The codes have been tested in the following environment:
@@ -106,6 +107,7 @@ data
 ├── example_1h00
 │   ├── ref_points.sdf
 │   ├── processed_pocket_1h00.pkl
+│   └── ligand.sdf
 ```
 
 ## Sample
