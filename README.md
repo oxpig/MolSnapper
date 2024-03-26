@@ -1,46 +1,43 @@
 # MolSnapper: Conditioning Diffusion for Structure Based Drug Design
 > This is A tool to condition diffusion model for Generating 3D Drug-Like Molecules.
 > 
-> This repository is build on [MolDiff](https://proceedings.mlr.press/v202/peng23b.html) code and conditioned MolDiff trained model.
+> This repository is build on [MolDiff](https://proceedings.mlr.press/v202/peng23b.html) code and conditioned MolDiff trained [model](https://github.com/pengxingang/MolDiff/tree/master).
 
 
 More information can be found in our paper.
-
 
 ## Installation
 ### Dependency
 The codes have been tested in the following environment:
 Package  | Version
 --- | ---
-Python | 3.8.13
-PyTorch | 1.10.1
-CUDA | 11.3.1
-PyTorch Geometric | 2.0.4
-RDKit | 2022.03.2
-
+Python | 3.9.18
+PyTorch | 2.0.1
+CUDA | 11.7
+PyTorch Geometric | 2.3.1
+RDKit | 2022.03.5
+Biopython | 1.83
+PyTorch Scatter | 2.1.1
 
 ### Install via conda yaml file (cuda 11.3)
 ```bash
 conda env create -f env.yaml
-conda activate MolDiff
+conda activate MolSnapper
 ```
 
 ### Install manually
-
 ``` bash
-conda create -n MolDiff python=3.8 # optinal, create a new environment
-conda activate MolDiff
+conda create -n MolSanpper python=3.9 # optinal, create a new environment
+conda activate MolSanpper
 
-# Install PyTorch (for cuda 11.3)
-conda install pytorch==1.10.1 cudatoolkit=11.3 -c pytorch -c conda-forge
+conda install pytorch pytorch-cuda=11.7 -c pytorch -c nvidia
 conda install pyg -c pyg
+conda install -c pyg pytorch-scatter
 
 # Install other tools
 conda install -c conda-forge rdkit
 conda install pyyaml easydict python-lmdb -c conda-forge
-
-# Install tensorboard only for training
-conda install tensorboard -c conda-forge
+conda install -c oddt oddt
 ```
 
 
@@ -54,6 +51,11 @@ Please download the following files:
 Save them in <test_directory> and process the test data using:
 ```python
 python scripts/prepare_data_cd.py --pairs-paths <test_directory>/test_index.pkl --root-dir <test_directory>  --out-mol-sdf <data_dir>/test_mol.sdf --out-pockets-pkl <data_dir>/test_pockets.pkl --out-table <data_dir>/test_table.csv
+```
+
+For example:
+```python
+python scripts/prepare_data_cd.py --pairs-paths ./../crossdocked/test_index.pkl --root-dir ./../crossdocked/test_set  --out-mol-sdf ./../crossdocked/test_mol.sdf --out-pockets-pkl ./../crossdocked/test_pockets.pkl --out-table ./../crossdocked/test_table.csv
 ```
 #### Processed data
 The processed CrossDocked test set can be found in data dir:
@@ -97,6 +99,14 @@ For example:
 ```python
 python scripts/prepare_single_complex.py --root_dir  <data_directory>  --ligand_filename ligand.sdf --protein_filename data/protein.pdb --out_pockets_path ./data/protein.pkl
 ```
+#### Processed complex
+An example od processed complex,(PDB ID: 1h00), can be found here:
+``` bash
+data
+├── example_1h00
+│   ├── ref_points.sdf
+│   ├── processed_pocket_1h00.pkl
+```
 
 ## Sample
 
@@ -123,11 +133,10 @@ The parameters are:
 - `use_pharma`: A boolean parameter indicating whether to extract pharmacophore points from the SDF file or use the SDF as reference points.
 - `pharma_th`: determines the minimum percentage of satisfied pharmacophore points required for a generated molecule to be considered valid during the sampling process.
 - `clash_rate`: controls the strength of avoiding clashes during the molecule sampling process.
-- `num_pharma_atoms`: parameter specifies the number of pharmacophore atoms used for molecule generation from the extracted ones.
 - `distance_th sets`: the threshold for determining whether a pharmacophore is satisfied.
 An example command is:
 ```python
-python scripts/sample_single_pocket.py --outdir ./outputs --config ./configs/sample/sample_MolDiff.yml --batch_size 32 --pocket_path ./data/example_1h00/processed_pocket_1h00.pkl --sdf_path ./data/example_1h00/ref_points.sdf --use_pharma False --num_pharma_atoms 20 --clash_rate 0.1
+python scripts/sample_single_pocket.py --outdir ./outputs --config ./configs/sample/sample_MolDiff.yml --batch_size 32 --pocket_path ./data/example_1h00/processed_pocket_1h00.pkl --sdf_path ./data/example_1h00/ref_points.sdf --use_pharma False --clash_rate 0.1
 ```
 
 
@@ -146,7 +155,7 @@ python scripts/sample.py --outdir ./outputs --config ./configs/sample/sample_Mol
 ```
 
 ## Evaluate
-
+Filter the generted molecules using [PoseBusters](https://github.com/maabuu/posebusters)
 To evaluate the generated molecules, run the following command:
 ```python
 python scripts/evaluate.py  <gen_root> --protein_path <protein_path>.pdb --reflig_path <reflig_path> --save_path <save_path>
@@ -157,7 +166,9 @@ The parameters are:
 - `reflig_path`: the path to reference ligand to evaluate similarity (default is None).
 - `save_path`: the path directory to save the evaluation results.
 
-
-
+For example:
+```python
+python scripts/evaluate.py  ./outputs/my_run --protein_path ./data/example_1h00/pocket/1h00_protein.pdb --reflig_path ./data/example_1h00/ligand.sdf --save_path ./outputs/my_run/eval 
+```
 
 
