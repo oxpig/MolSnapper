@@ -136,6 +136,7 @@ The parameters are:
 - `pharma_th`: determines the minimum percentage of satisfied pharmacophore points required for a generated molecule to be considered valid during the sampling process.
 - `clash_rate`: controls the strength of avoiding clashes during the molecule sampling process.
 - `distance_th sets`: the threshold for determining whether a pharmacophore is satisfied.
+
 An example command is:
 ```python
 python scripts/sample_single_pocket.py --outdir ./outputs --config ./configs/sample/sample_MolDiff.yml --batch_size 32 --pocket_path ./data/example_1h00/processed_pocket_1h00.pkl --sdf_path ./data/example_1h00/ref_points.sdf --use_pharma False --clash_rate 0.1
@@ -157,9 +158,9 @@ python scripts/sample.py --outdir ./outputs --config ./configs/sample/sample_Mol
 ```
 
 ## Evaluate
-Filter the generted molecules using [PoseBusters](https://github.com/maabuu/posebusters)
+Filter the generted molecules using [PoseBusters](https://github.com/maabuu/posebusters).
 
-To evaluate the generated molecules, run the following command:
+To evaluate basic molecular properties, 3D similarity to reference ligand, and hydrogen bonds by ODDT of the generated molecules, run the following command:
 ```python
 python scripts/evaluate.py  <gen_root> --protein_path <protein_path>.pdb --reflig_path <reflig_path> --save_path <save_path>
 ```
