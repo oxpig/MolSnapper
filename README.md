@@ -101,7 +101,7 @@ For example:
 python scripts/prepare_single_complex.py --root_dir  <data_directory>  --ligand_filename ligand.sdf --protein_filename data/protein.pdb --out_pockets_path ./data/protein.pkl
 ```
 #### Processed complex
-An example od processed complex,(PDB ID: 1h00), can be found here:
+An example of a processed complex (PDB ID: 1h00) can be found here:
 ``` bash
 data
 ├── example_1h00
