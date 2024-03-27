@@ -81,7 +81,7 @@ python scripts/prepare_moad.py --test_path <test_directory>  --out-mol-sdf <data
 The processed Binding MOAD data can be found here:
 ``` bash
 data
-├── moad
+├── MOAD
 │   ├── test_mol.sdf
 │   ├── test_pockets.pkl
 │   └── test_table.csv
@@ -158,6 +158,7 @@ python scripts/sample.py --outdir ./outputs --config ./configs/sample/sample_Mol
 
 ## Evaluate
 Filter the generted molecules using [PoseBusters](https://github.com/maabuu/posebusters)
+
 To evaluate the generated molecules, run the following command:
 ```python
 python scripts/evaluate.py  <gen_root> --protein_path <protein_path>.pdb --reflig_path <reflig_path> --save_path <save_path>

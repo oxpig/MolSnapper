@@ -65,7 +65,7 @@
     "WebServerToolWindowPanel.toolwindow.show.permissions": "false",
     "WebServerToolWindowPanel.toolwindow.show.size": "false",
     "git-widget-placeholder": "master",
-    "last_opened_file_path": "C:/Users/ziv-admin/Documents/MolSnapper-master",
+    "last_opened_file_path": "C:/Users/ziv-admin/Documents/MolSnapper-master/scripts",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -77,9 +77,9 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\ziv-admin\Documents\MolSnapper-master\scripts" />
       <recent name="C:\Users\ziv-admin\Documents\MolSnapper-master\data\crossdocked" />
       <recent name="C:\Users\ziv-admin\Documents\MolSnapper-master\data\processed_moad" />
-      <recent name="C:\Users\ziv-admin\Documents\MolSnapper-master\scripts" />
       <recent name="C:\Users\ziv-admin\Documents\MolSnapper-master\utils" />
       <recent name="C:\Users\ziv-admin\Documents\MolSnapper-master\ckpt" />
     </key>
@@ -196,6 +196,7 @@
       <workItem from="1709127721838" duration="632000" />
       <workItem from="1710584902485" duration="602000" />
       <workItem from="1710761837669" duration="3024000" />
+      <workItem from="1711363076312" duration="2857000" />
     </task>
     <task id="LOCAL-00001" summary="change evaluate">
       <option name="closed" value="true" />
@@ -232,21 +233,6 @@
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/scripts/prepare_single_complex.py</url>
           <option name="timeStamp" value="1" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/scripts/evaluate.py</url>
-          <line>63</line>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/scripts/evaluate.py</url>
-          <line>68</line>
-          <option name="timeStamp" value="3" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/scripts/evaluate.py</url>
-          <line>67</line>
-          <option name="timeStamp" value="4" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

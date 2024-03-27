@@ -125,8 +125,8 @@ def process_sdf(root_dir,pairs_paths):
 
     for file_dict in pairs_paths:
         print(uuid)
-        pdb_path = file_dict.get("protein_filename")
-        sdf_path = file_dict.get("ligand_filename")
+        pdb_path = file_dict.get("src_protein_filename")
+        sdf_path = file_dict.get("src_ligand_filename")
         mol = Chem.SDMolSupplier(os.path.join(root_dir, sdf_path))[0]
         if mol is None:
             print(sdf_path)
