@@ -59,7 +59,7 @@ if __name__ == '__main__':
     parser.add_argument('--num_pharma_atoms', type=int, default=20)
     parser.add_argument('--distance_th', type=int, default=1.)
     args = parser.parse_args()
-    args.device = torch.device('cpu')
+
     # # Load configs
     config = load_config(args.config)
     config_name = os.path.basename(args.config)[:os.path.basename(args.config).rfind('.')]
