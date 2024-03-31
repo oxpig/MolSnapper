@@ -4,7 +4,7 @@
 > This repository is build on [MolDiff](https://proceedings.mlr.press/v202/peng23b.html) code and conditioned MolDiff trained [model](https://github.com/pengxingang/MolDiff/tree/master).
 
 
-More information can be found in our paper.
+More information can be found in our [paper](https://www.biorxiv.org/content/10.1101/2024.03.28.586278v1).
 
 ![](img.png)
 ## Installation
