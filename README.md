@@ -22,7 +22,7 @@ PyTorch Scatter | 2.1.1
 
 ### Install via conda yaml file (cuda 11.3)
 ```bash
-conda env create -f env.yaml
+conda env create -f env.yml
 conda activate MolSnapper
 ```
 
