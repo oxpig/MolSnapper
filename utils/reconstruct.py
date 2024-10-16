@@ -197,7 +197,7 @@ def add_context(data):
     data.ligand_context_bond_type = data.ligand_bond_type
     return data
 
-def reconstruct_from_generated_with_edges(mol_info, check_validity=True, add_edge=None):
+def reconstruct_from_generated_with_edges(mol_info, check_validity=True, add_edge=None, largest_frag = True):
     xyz = mol_info['atom_pos'].tolist()
     atomic_nums = mol_info['element'].tolist()
     if 'bond_index' not in mol_info:
@@ -270,7 +270,15 @@ def reconstruct_from_generated_with_edges(mol_info, check_validity=True, add_edg
         except Exception as e:
             raise MolReconsError()
             # return None
-        
+
+    if largest_frag:
+        try:
+            mol_frags = Chem.GetMolFrags(mol, asMols=True, sanitizeFrags=False)
+            mol = max(mol_frags, default=mol, key=lambda m: m.GetNumAtoms())
+            Chem.SanitizeMol(mol)
+        except Exception as e:
+            raise MolReconsError()
+
     return mol
 
 
