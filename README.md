@@ -19,6 +19,7 @@ PyTorch Geometric | 2.3.1
 RDKit | 2022.03.5
 Biopython | 1.83
 PyTorch Scatter | 2.1.1
+pdb-tools      |   >=2.0
 
 ### Install via conda yaml file (cuda 11.3)
 ```bash
@@ -39,6 +40,7 @@ conda install -c pyg pytorch-scatter
 conda install -c conda-forge rdkit
 conda install pyyaml easydict python-lmdb -c conda-forge
 conda install -c oddt oddt
+conda install -c conda-forge pdb-tools
 ```
 
 
